@@ -8,13 +8,15 @@ public class GraphVertex implements Comparable<GraphVertex> {
     public static final int NO_DISTANCE = Integer.MAX_VALUE;
     private DistanceWithFewestEdges distanceWithFewestEdges
             = new DistanceWithFewestEdges(NO_DISTANCE, 0);
-    private List<VertexWithDistance> edges = new ArrayList<>();
+    private List<GraphVertex> edges = new ArrayList<>();
     private String name;
+    private Integer distance;
     private GraphVertex previous = null;
 
     public GraphVertex(String name) {
         this.name = name;
     }
+
 
     public DistanceWithFewestEdges getDistanceWithFewestEdges() {
         return distanceWithFewestEdges;
@@ -24,12 +26,20 @@ public class GraphVertex implements Comparable<GraphVertex> {
         this.distanceWithFewestEdges = distanceWithFewestEdges;
     }
 
-    public List<VertexWithDistance> getEdges() {
+    public List<GraphVertex> getEdges() {
         return edges;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 
     public GraphVertex getPrevious() {

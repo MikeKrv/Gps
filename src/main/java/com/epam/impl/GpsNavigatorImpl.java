@@ -42,8 +42,8 @@ public class GpsNavigatorImpl implements GpsNavigator {
 
                 addVertexIfMissing(startVertex);
                 addVertexIfMissing(endVertex);
-                roadGraph.get(startVertex).getEdges().add(
-                        new VertexWithDistance(roadGraph.get(endVertex), distance));
+                roadGraph.get(endVertex).setDistance(distance);
+                roadGraph.get(startVertex).getEdges().add(roadGraph.get(endVertex));
 
             }
         }
@@ -78,16 +78,16 @@ public class GpsNavigatorImpl implements GpsNavigator {
             }
             nodeSet.remove(nodeSet.first());
 
-            for (VertexWithDistance v : u.getEdges()) {
+            for (GraphVertex v : u.getEdges()) {
                 int vDistance = u.getDistanceWithFewestEdges().getDistance() + v.getDistance();
                 int vNumEdges = u.getDistanceWithFewestEdges().getMinNumEdges() + 1;
-                if (v.getVertex().getDistanceWithFewestEdges().getDistance() > vDistance
-                        || (v.getVertex().getDistanceWithFewestEdges().getDistance() == vDistance
-                        && v.getVertex().getDistanceWithFewestEdges().getMinNumEdges() > vNumEdges)) {
-                    nodeSet.remove(v.getVertex());
-                    v.getVertex().setPrevious(u);
-                    v.getVertex().setDistanceWithFewestEdges(new DistanceWithFewestEdges(vDistance, vNumEdges));
-                    nodeSet.add(v.getVertex());
+                if (v.getDistanceWithFewestEdges().getDistance() > vDistance
+                        || (v.getDistanceWithFewestEdges().getDistance() == vDistance
+                        && v.getDistanceWithFewestEdges().getMinNumEdges() > vNumEdges)) {
+                    nodeSet.remove(v);
+                    v.setPrevious(u);
+                    v.setDistanceWithFewestEdges(new DistanceWithFewestEdges(vDistance, vNumEdges));
+                    nodeSet.add(v);
                 }
             }
         }
@@ -102,7 +102,7 @@ public class GpsNavigatorImpl implements GpsNavigator {
         GraphVertex previous = endVertex.getPrevious();
         boolean previousExists = previous != null;
         if (vertexDistance == GraphVertex.NO_DISTANCE) {
-            throw new NoPathException("There is not route between points");
+            throw new NoPathException("There is no route between points");
         }
         distance.add(vertexDistance);
         if (previousExists) {
