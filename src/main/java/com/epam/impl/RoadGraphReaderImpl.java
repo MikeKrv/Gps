@@ -1,19 +1,19 @@
 package com.epam.impl;
 
-import com.epam.api.MapReader;
+import com.epam.api.RoadGraphReader;
 import com.epam.impl.exception.InvalidLineFormatException;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapReaderImpl implements MapReader {
+public class RoadGraphReaderImpl implements RoadGraphReader<WeightedGraphEdge> {
 
     private static final int PARTS_OF_THE_ROADMAP = 4;
 
     @Override
-    public Map<String, GraphVertex> readData(String filePath) throws IOException, InvalidLineFormatException {
-        Map<String, GraphVertex> roadGraph = new HashMap<>();
+    public Map<String, GraphVertex<WeightedGraphEdge>> readData(String filePath) throws IOException, InvalidLineFormatException {
+        Map<String, GraphVertex<WeightedGraphEdge>> roadGraph = new HashMap<>();
         File inputFile = new File(filePath);
 
         try (FileInputStream fileInputStream = new FileInputStream(inputFile);
@@ -43,9 +43,9 @@ public class MapReaderImpl implements MapReader {
         return roadGraph;
     }
 
-    private void addVertexIfMissing(Map<String, GraphVertex> roadGraph, String vertex) {
+    private void addVertexIfMissing(Map<String, GraphVertex<WeightedGraphEdge>> roadGraph, String vertex) {
         if (!roadGraph.containsKey(vertex)) {
-            roadGraph.put(vertex, new GraphVertex(vertex));
+            roadGraph.put(vertex, new GraphVertex<WeightedGraphEdge>(vertex));
         }
     }
 }

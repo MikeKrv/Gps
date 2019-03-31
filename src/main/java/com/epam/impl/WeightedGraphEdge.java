@@ -1,17 +1,18 @@
 package com.epam.impl;
 
-public class WeightedGraphEdge {
-    private final GraphVertex vertex;
+public class WeightedGraphEdge implements Edge {
+    private final GraphVertex<WeightedGraphEdge> vertex;
     private final int length;
     private final int cost;
 
-    public WeightedGraphEdge(GraphVertex vertex, int length, int cost) {
+    public WeightedGraphEdge(GraphVertex<WeightedGraphEdge> vertex, int length, int cost) {
         this.vertex = vertex;
         this.length = length;
         this.cost = cost;
     }
 
-    public GraphVertex getVertex() {
+    @Override
+    public GraphVertex<WeightedGraphEdge> getVertex() {
         return vertex;
     }
 

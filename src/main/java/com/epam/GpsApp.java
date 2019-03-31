@@ -1,15 +1,14 @@
 package com.epam;
 
 import com.epam.api.GpsNavigator;
-import com.epam.api.MapReader;
 import com.epam.api.Path;
+import com.epam.api.RoadGraphReader;
 import com.epam.impl.GpsNavigatorImpl;
 import com.epam.impl.GraphVertex;
-import com.epam.impl.MapReaderImpl;
+import com.epam.impl.RoadGraphReaderImpl;
+import com.epam.impl.WeightedGraphEdge;
 import com.epam.impl.exception.InvalidLineFormatException;
-import com.epam.impl.exception.NoPathException;
 import com.epam.impl.exception.RouteException;
-import com.epam.impl.exception.UnknownVertexException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,11 +21,12 @@ public class GpsApp {
 
     public static void main(String[] args) {
         try {
-            final MapReader mapReader = new MapReaderImpl();
-            Map<String, GraphVertex> roadGraph = mapReader.readData("D:\\roadmap.txt");
+            final RoadGraphReader<WeightedGraphEdge> roadGraphReader = new RoadGraphReaderImpl();
+            Map<String, GraphVertex<WeightedGraphEdge>> roadGraph = roadGraphReader.readData("D:\\roadmap.txt");
 
             final GpsNavigator navigator = new GpsNavigatorImpl();
-            final Path path = navigator.findPath(roadGraph,"A", "C");
+            final Path path = navigator.findPath(roadGraph, "A", "C",
+                    weightedGraphEdge -> weightedGraphEdge.getCost() * weightedGraphEdge.getLength());
             System.out.println(path);
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e);

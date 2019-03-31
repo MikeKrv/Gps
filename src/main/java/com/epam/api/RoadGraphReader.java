@@ -1,12 +1,13 @@
 package com.epam.api;
 
+import com.epam.impl.Edge;
 import com.epam.impl.GraphVertex;
 import com.epam.impl.exception.InvalidLineFormatException;
 
 import java.io.IOException;
 import java.util.Map;
 
-public interface MapReader {
+public interface RoadGraphReader<E extends Edge> {
     /**
      *
      * @param filePath path to file, which contains data in the following format:
@@ -22,5 +23,5 @@ public interface MapReader {
      *                 its length and the fourth one represents cost of transportation.
      * @return
      */
-    Map<String, GraphVertex> readData(String filePath) throws IOException, InvalidLineFormatException;
+    Map<String, GraphVertex<E>> readData(String filePath) throws IOException, InvalidLineFormatException;
 }
