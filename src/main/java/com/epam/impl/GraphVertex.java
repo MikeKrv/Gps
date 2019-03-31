@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class GraphVertex implements Comparable<GraphVertex> {
+public class GraphVertex<E extends Edge> implements Comparable<GraphVertex<E>> {
     public static final int NO_DISTANCE = Integer.MAX_VALUE;
     private DistanceWithFewestEdges distanceWithFewestEdges
             = new DistanceWithFewestEdges(NO_DISTANCE, 0);
-    private List<VertexWithDistance> edges = new ArrayList<>();
+    private List<E> edges = new ArrayList<>();
     private String name;
-    private GraphVertex previous = null;
+    private GraphVertex<E> previous = null;
 
     public GraphVertex(String name) {
         this.name = name;
@@ -24,7 +24,7 @@ public class GraphVertex implements Comparable<GraphVertex> {
         this.distanceWithFewestEdges = distanceWithFewestEdges;
     }
 
-    public List<VertexWithDistance> getEdges() {
+    public List<E> getEdges() {
         return edges;
     }
 
@@ -32,16 +32,16 @@ public class GraphVertex implements Comparable<GraphVertex> {
         return name;
     }
 
-    public GraphVertex getPrevious() {
+    public GraphVertex<E> getPrevious() {
         return previous;
     }
 
-    public void setPrevious(GraphVertex previous) {
+    public void setPrevious(GraphVertex<E> previous) {
         this.previous = previous;
     }
 
     @Override
-    public int compareTo(GraphVertex o) {
+    public int compareTo(GraphVertex<E> o) {
         int result = distanceWithFewestEdges.compareTo(o.distanceWithFewestEdges);
         return result != 0 ? result : name.compareTo(o.name);
     }
@@ -54,7 +54,7 @@ public class GraphVertex implements Comparable<GraphVertex> {
         if (this == obj) {
             return true;
         }
-        GraphVertex that = (GraphVertex)obj;
+        GraphVertex<E> that = (GraphVertex<E>)obj;
         return name.equals(that.name)
                 && distanceWithFewestEdges.equals(that.distanceWithFewestEdges);
     }
