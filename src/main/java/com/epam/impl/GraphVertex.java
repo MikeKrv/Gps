@@ -8,7 +8,7 @@ public class GraphVertex implements Comparable<GraphVertex> {
     public static final int NO_DISTANCE = Integer.MAX_VALUE;
     private DistanceWithFewestEdges distanceWithFewestEdges
             = new DistanceWithFewestEdges(NO_DISTANCE, 0);
-    private List<VertexWithDistance> edges = new ArrayList<>();
+    private List<WeightedGraphEdge> edges = new ArrayList<>();
     private String name;
     private GraphVertex previous = null;
 
@@ -24,7 +24,7 @@ public class GraphVertex implements Comparable<GraphVertex> {
         this.distanceWithFewestEdges = distanceWithFewestEdges;
     }
 
-    public List<VertexWithDistance> getEdges() {
+    public List<WeightedGraphEdge> getEdges() {
         return edges;
     }
 
